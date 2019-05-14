@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Course Manager</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="home.style.client.css">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjlgVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-dark bg-primary">
+    <a href="" class="navbar-brand">
+      <div class="row">
+        <i class="material-icons col-2"> menu </i>
+        <h5 class="col-10 d-none d-md-block">Course Manager</h5>
+      </div>
+    </a>
+    <form class="form-inline">
+      <input class="form-control mr-lg-2 col-auto" type="search" placeholder="New Course Title" id="addcourseTitle">
+      <a class="btn btn-light my-2 my-lg-0 col-sm-auto" id="addcourseBtn" href="#" role="button">Add Course</a>
+    </form>
+  </nav>
+
+  <nav class="bg-light d-none d-lg-block">
+    <div class="container">
+      <ul class="row list-group list-group-horizontal-lg list-unstyled">
+        <li class="list-item col-lg-5">
+          <a class="btn" href="#" role="button">Title</a>
+        </li>
+        <li class="list-item col-lg-3">
+          <a class="btn" href="#" role="button">Owned By</a>
+        </li>
+        <li class="list-item col-lg-3">
+          <a class="btn" href="#" role="button">Last Modified By</a>
+        </li>
+        <li class="list-item col-lg-1">
+          <div class="row">
+            <a class="btn col-lg-6" href="#" role="button"><i class="material-icons"> apps </i></a>
+            <a class="btn col-lg-6" href="#" role="button"><i class="material-icons"> sort_by_alpha </i></a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <ul class="list-group" id="courselist">
+      <hr class="my-2">
+      <h5>Today</h5>
+
+      <li class="list-group-item">
+        <ul class="row list-unstyled">
+          <li class="list-item col-lg-5 col-11">
+            <div class="row">
+              <i class="material-icons col-1"> insert_drive_file </i>
+              <div class="col-11">CS5500 Software Engineering Graduate</div>
+            </div>
+          </li>
+          <li class="list-item col-lg-3 d-none d-lg-block">me</li>
+          <li class="list-item col-lg-3 d-none d-lg-block">6:35 PM</li>
+          <li class="list-item col-1">
+            <i class="material-icons close noselect"> close </i>
+          </li>
+        </ul>
+      </li>
+      <li class="list-group-item">
+        <ul class="row list-unstyled">
+          <li class="list-item col-lg-5 col-11">
+            <div class="row">
+              <i class="material-icons col-1"> insert_drive_file </i>
+              <div class="col-11">CS5500 Software Engineering Graduate</div>
+            </div>
+          </li>
+          <li class="list-item col-lg-3 d-none d-lg-block">me</li>
+          <li class="list-item col-lg-3 d-none d-lg-block">6:35 PM</li>
+          <li class="list-item col-1">
+            <i class="material-icons close noselect"> close </i>
+          </li>
+        </ul>
+      </li>
+      <li class="list-group-item">
+        <ul class="row list-unstyled">
+          <li class="list-item col-lg-5 col-11">
+            <div class="row">
+              <i class="material-icons col-1"> insert_drive_file </i>
+              <div class="col-11">CS5500 Software Engineering Graduate</div>
+            </div>
+          </li>
+          <li class="list-item col-lg-3 d-none d-lg-block">me</li>
+          <li class="list-item col-lg-3 d-none d-lg-block">6:35 PM</li>
+          <li class="list-item col-1">
+            <i class="material-icons close noselect"> close </i>
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+
+    <ul class="list-group">
+      <hr class="my-2">
+      <h5>7 Days</h5>
+      <li class="list-group-item">
+        <ul class="row list-unstyled">
+          <li class="list-item col-lg-5 col-11">
+            <div class="row">
+              <i class="material-icons col-1"> insert_drive_file </i>
+              <div class="col-11">CS5500 Software Engineering Graduate</div>
+            </div>
+          </li>
+          <li class="list-item col-lg-3 d-none d-lg-block">me</li>
+          <li class="list-item col-lg-3 d-none d-lg-block">6:35 PM</li>
+          <li class="list-item col-1">
+            <i class="material-icons close noselect"> close </i>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <template id="courseTemplate">
+    <li class="list-group-item">
+      <ul class="row list-unstyled">
+        <li class="list-item col-lg-5 col-11">
+          <div class="row">
+            <i class="material-icons col-1"> insert_drive_file </i>
+            <div class="col-11 courseTitle"></div>
+          </div>
+        </li>
+        <li class="list-item col-lg-3 d-none d-lg-block">me</li>
+        <li class="list-item col-lg-3 d-none d-lg-block">6:35 PM</li>
+        <li class="list-item col-1">
+          <i class="material-icons close noselect"> close </i>
+        </li>
+      </ul>
+    </li>
+  </template>
+
+  <script src="home.component.client.js"></script>
+</body>
+
+</html>
