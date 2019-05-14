@@ -4,7 +4,11 @@ function AdminUserServiceClient() {
 
   var self = this;
 
+  let deploy = true;
   this.url = 'http://localhost:8080/api/users';
+  if(deploy){
+    this.url = 'https://webd-chanmin-park-server-java.herokuapp.com/api/users'
+  }
 
   this.createUser = function createUser(user, callback) {
     registeredUsers[idIndex] = user;
