@@ -137,7 +137,11 @@
       let role = $('#roleFld').val();
       let update = new User(selectedId['id'], usern, pswd, fname, lname, role);
 
-      userService.updateUser(update, findAllUsers);
+      userService.updateUser(update, function (registeredUsers) {
+        renderUsers(registeredUsers);
+        deleteUser();
+        findUserById();
+      });
       ClearFormFields();
     }
   }

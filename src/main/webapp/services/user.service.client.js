@@ -2,7 +2,7 @@ function AdminUserServiceClient() {
   var self = this;
 
   // deployment url
-  let deploy = true;
+  let deploy = false;
   this.url = 'http://localhost:8080/api/users';
   if (deploy) {
     this.url = 'https://webd-chanmin-park-server-java.herokuapp.com/api/users'
@@ -90,8 +90,10 @@ function AdminUserServiceClient() {
     });
   };
 
+  // For each returned JSON object, parse as a js user object and add to key value dictionary. 
   // take given js user object and send as JSON put request
   this.updateUser = function updateUser(user, callback) {
+    let registeredUsers = {};
     $.ajax({
       type: 'PUT',
       url: this.url,
@@ -103,9 +105,19 @@ function AdminUserServiceClient() {
         "lastName": user.lastName,
         "role": user.role
       }),
-      success: function (data) {
-        callback();
-        console.log(data);
+      success: function (ret) {
+        for (var index in ret) {
+          let userJava = ret[index];
+          let userJs =
+            new User(userJava.id,
+              userJava.username,
+              userJava.password,
+              userJava.firstName,
+              userJava.lastName,
+              userJava.role);
+          registeredUsers[index] = userJs;
+        }
+        callback(registeredUsers);
       },
       contentType: "application/json",
       dataType: 'json'

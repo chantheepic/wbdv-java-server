@@ -84,7 +84,7 @@ public class UserController implements ApplicationListener<ApplicationReadyEvent
 
   // overwrite parameters of user with given id with those of given user
   @PutMapping("/api/users")
-  public String updateUser(@RequestBody User user) {
+  public ArrayList<User> updateUser(@RequestBody User user) {
 
     for (int i = 0; i < registeredUsers.size(); i++) {
       if (registeredUsers.get(i).getId() == user.getId()) {
@@ -95,9 +95,9 @@ public class UserController implements ApplicationListener<ApplicationReadyEvent
         target.setLastName(user.getLastName());
         target.setRole(user.getRole());
 
-        return "User " + user.getId() + " updated";
+        return registeredUsers;
       }
     }
-    return "User not found";
+    return null;
   }
 }
