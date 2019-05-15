@@ -1,12 +1,14 @@
 function AdminUserServiceClient() {
   var self = this;
 
+  // deployment url
   let deploy = true;
   this.url = 'http://localhost:8080/api/users';
   if (deploy) {
     this.url = 'https://webd-chanmin-park-server-java.herokuapp.com/api/users'
   }
 
+  // take given js user object and send as JSON post request
   this.createUser = function createUser(user, callback) {
     $.ajax({
       type: 'POST',
@@ -18,7 +20,7 @@ function AdminUserServiceClient() {
         "lastName": user.lastName,
         "role": user.role
       }),
-      success: function (data) { 
+      success: function (data) {
         callback();
         console.log(data);
       },
@@ -27,6 +29,8 @@ function AdminUserServiceClient() {
     });
   };
 
+  // For each returned JSON object, parse as a js user object and add to key value dictionary. 
+  // return dictionary of js user objects
   this.findAllUsers = function findAllUsers(callback) {
     let registeredUsers = {};
     $.get(this.url, function (ret) {
@@ -45,6 +49,7 @@ function AdminUserServiceClient() {
     })
   };
 
+  // One JSON object is returned. Parse and return as js user object
   this.findUserById = function findUserById(userId, callback) {
     $.get(`${this.url}/${userId}`, function (ret) {
       let userJava = ret;
@@ -60,6 +65,7 @@ function AdminUserServiceClient() {
     })
   };
 
+  // use given userid and send ajax delete request
   this.deleteUser = function deleteUser(userId, callback) {
     $.ajax({
       url: `${this.url}/${userId}`,
@@ -71,6 +77,7 @@ function AdminUserServiceClient() {
     });
   };
 
+  // take given js user object and send as JSON put request
   this.updateUser = function updateUser(user, callback) {
     $.ajax({
       type: 'PUT',
@@ -83,7 +90,7 @@ function AdminUserServiceClient() {
         "lastName": user.lastName,
         "role": user.role
       }),
-      success: function (data) { 
+      success: function (data) {
         callback();
         console.log(data);
       },
