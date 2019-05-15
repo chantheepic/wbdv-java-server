@@ -87,12 +87,10 @@
 
     if (usern != '' && pswd != '' && fname != '' && role != '') {
       let newUser = new User(-1, usern, pswd, fname, lname, role);
-      userService.createUser(newUser, function(){
-        userService.findAllUsers(function (registeredUsers) {
-          renderUsers(registeredUsers);
-          deleteUser();
-          findUserById();
-        });
+      userService.createUser(newUser, function (registeredUsers) {
+        renderUsers(registeredUsers);
+        deleteUser();
+        findUserById();
       });
       ClearFormFields();
       $('#alert').hide();
@@ -116,7 +114,7 @@
     $('.edit').click(function () {
       let targetId = $(this).closest('tr')[0].id;
 
-      userService.findUserById(targetId, function (targetUser){
+      userService.findUserById(targetId, function (targetUser) {
         selectedId['selected'] = true;
         selectedId['id'] = targetId;
         $('#usernameFld').val(targetUser.getUsername());
