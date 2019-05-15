@@ -9,7 +9,10 @@ function AdminUserServiceClient() {
   }
 
   // take given js user object and send as JSON post request
+  // For each returned JSON object, parse as a js user object and add to key value dictionary. 
+  // return dictionary of js user objects
   this.createUser = function createUser(user, callback) {
+    let registeredUsers = {};
     $.ajax({
       type: 'POST',
       url: this.url,
@@ -20,9 +23,19 @@ function AdminUserServiceClient() {
         "lastName": user.lastName,
         "role": user.role
       }),
-      success: function (data) {
-        callback();
-        console.log(data);
+      success: function (ret) {
+        for (var index in ret) {
+          let userJava = ret[index];
+          let userJs =
+            new User(userJava.id,
+              userJava.username,
+              userJava.password,
+              userJava.firstName,
+              userJava.lastName,
+              userJava.role);
+          registeredUsers[index] = userJs;
+        }
+        callback(registeredUsers);
       },
       contentType: "application/json",
       dataType: 'json'

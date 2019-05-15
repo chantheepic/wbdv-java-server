@@ -64,7 +64,7 @@
     })
   }
 
-  // clear all input fields. Called on add and update.
+  // clear all input fields. Called on create and update.
   function ClearFormFields() {
     $('#usernameFld').val('');
     $('#passwordFld').val('');
@@ -87,7 +87,13 @@
 
     if (usern != '' && pswd != '' && fname != '' && role != '') {
       let newUser = new User(-1, usern, pswd, fname, lname, role);
-      userService.createUser(newUser, findAllUsers);
+      userService.createUser(newUser, function(){
+        userService.findAllUsers(function (registeredUsers) {
+          renderUsers(registeredUsers);
+          deleteUser();
+          findUserById();
+        });
+      });
       ClearFormFields();
       $('#alert').hide();
     } else {

@@ -60,12 +60,13 @@ public class UserController implements ApplicationListener<ApplicationReadyEvent
   }
 
   // add given user. use constructor that takes in id
+  // return all users
   @PostMapping("/api/users")
-  public User addUser(@RequestBody User user) {
+  public ArrayList<User> addUser(@RequestBody User user) {
     User newUser = new User(idIndex, user);
     registeredUsers.add(newUser);
     idIndex++;
-    return newUser;
+    return registeredUsers;
   }
 
   // delete user with given id
