@@ -1,54 +1,94 @@
 function AdminUserServiceClient() {
-  let registeredUsers = {};
-  let idIndex = 0;
-
   var self = this;
 
-  let deploy = true;
+  let deploy = false;
   this.url = 'http://localhost:8080/api/users';
-  if(deploy){
+  if (deploy) {
     this.url = 'https://webd-chanmin-park-server-java.herokuapp.com/api/users'
   }
 
   this.createUser = function createUser(user, callback) {
-    registeredUsers[idIndex] = user;
-    idIndex++;
-
     $.ajax({
       type: 'POST',
       url: this.url,
-      data: JSON.stringify({"username":user.username,
-                            "password":user.password,
-                            "firstName":user.firstName,
-                            "lastName":user.lastName,
-                            "role":user.role}),
-      success: function(data) {console.log(data)},
+      data: JSON.stringify({
+        "username": user.username,
+        "password": user.password,
+        "firstName": user.firstName,
+        "lastName": user.lastName,
+        "role": user.role
+      }),
+      success: function (data) { 
+        callback();
+        console.log(data);
+      },
       contentType: "application/json",
       dataType: 'json'
-  });
+    });
   };
-  this.findAllUsers = function findAllUsers(callback) {
 
-    $.get(this.url, function (d) {
-      console.log(d);
+  this.findAllUsers = function findAllUsers(callback) {
+    let registeredUsers = {};
+    $.get(this.url, function (ret) {
+      for (var index in ret) {
+        let userJava = ret[index];
+        let userJs =
+          new User(userJava.id,
+            userJava.username,
+            userJava.password,
+            userJava.firstName,
+            userJava.lastName,
+            userJava.role);
+        registeredUsers[index] = userJs;
+      }
+      callback(registeredUsers);
     })
-    return registeredUsers;
   };
+
   this.findUserById = function findUserById(userId, callback) {
-    return registeredUsers[userId];
+    $.get(`${this.url}/${userId}`, function (ret) {
+      let userJava = ret;
+      let userJs =
+        new User(userJava.id,
+          userJava.username,
+          userJava.password,
+          userJava.firstName,
+          userJava.lastName,
+          userJava.role);
+
+      callback(userJs);
+    })
   };
+
   this.deleteUser = function deleteUser(userId, callback) {
     $.ajax({
-      url: this.url,
+      url: `${this.url}/${userId}`,
       type: 'DELETE',
       success: function (d) {
+        callback();
         console.log(d)
       }
     });
-
-    delete registeredUsers[userId];
   };
-  this.updateUser = function updateUser(userId, user, callback) {
-    registeredUsers[userId] = user;
+
+  this.updateUser = function updateUser(user, callback) {
+    $.ajax({
+      type: 'PUT',
+      url: this.url,
+      data: JSON.stringify({
+        "id": user.id,
+        "username": user.username,
+        "password": user.password,
+        "firstName": user.firstName,
+        "lastName": user.lastName,
+        "role": user.role
+      }),
+      success: function (data) { 
+        callback();
+        console.log(data);
+      },
+      contentType: "application/json",
+      dataType: 'json'
+    });
   };
 }
