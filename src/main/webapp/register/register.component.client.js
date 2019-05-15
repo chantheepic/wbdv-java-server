@@ -4,7 +4,7 @@
 
   $('#registerBtn').click(function () {
     if (PswCheck()) {
-      document.location.replace('../profile/profile.template.client.html');
+      document.location.replace('../prof/profile.template.client.html');
     }
   });
 
