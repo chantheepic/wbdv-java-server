@@ -2,7 +2,7 @@ function AdminUserServiceClient() {
   var self = this;
 
   // deployment url
-  let deploy = false;
+  let deploy = true;
   this.url = 'http://localhost:8080/api/users';
   if (deploy) {
     this.url = 'https://webd-chanmin-park-server-java.herokuapp.com/api/users'
