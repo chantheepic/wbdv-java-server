@@ -1,3 +1,4 @@
+// js User Object Model
 function User(id, username, password, firstName, lastName, role) {
   this.id = id;
   this.username = username;

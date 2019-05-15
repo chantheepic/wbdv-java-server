@@ -1,10 +1,13 @@
 (function () {
+  // document preparation
   $('#alert').hide();
   var userService = new AdminUserServiceClient();
+  // remember id of user the client is editing
   let selectedId = { selected: false, id: 0 };
   $(main);
 
   function main() {
+    // event listeners for buttons
     $('.wbdv-search').click(function () {
       filterUsers();
     });
@@ -16,9 +19,12 @@
       updateUser();
       findAllUsers();
     });
+
+    // load and render current registered users
     findAllUsers();
   }
 
+  // hide all rows that contain unmatching user parameters
   function filterUsers() {
     let usern = $('#usernameFld').val();
     let pswd = $('#passwordFld').val();
@@ -58,6 +64,7 @@
     })
   }
 
+  // clear all input fields. Called on add and update
   function ClearFormFields() {
     $('#usernameFld').val('');
     $('#passwordFld').val('');
@@ -66,6 +73,9 @@
     $('#roleFld').val($('#roleFld').find('option')[0].text);
   }
 
+  // check if all fields are filled and then create new js user object
+  // pass object to createUser of userService instance
+  // show alert of empty fields exist
   function createUser() {
     let usern = $('#usernameFld').val();
     let pswd = $('#passwordFld').val();
@@ -83,6 +93,7 @@
     }
   }
 
+  // calls findAllUsers of userService instance. Pass all js user objects to render users
   function findAllUsers() {
     userService.findAllUsers(function (registeredUsers) {
       renderUsers(registeredUsers);
@@ -91,6 +102,8 @@
     });
   }
 
+  // find target id of user selected by client. for this implementation tr id is user id
+  // findUserById of userService returns js user object with user of target id
   function findUserById() {
     $('.edit').click(function () {
       let targetId = $(this).closest('tr')[0].id;
@@ -107,6 +120,8 @@
     });
   }
 
+  // when update button is clicked, the input fields are used to create new js user object
+  // user id is tracked as a package variable
   function updateUser() {
     if (selectedId['selected'] == true) {
       let usern = $('#usernameFld').val();
@@ -123,6 +138,7 @@
     }
   }
 
+  // clone template for row. use parameters from user object to populate template
   function renderUser(user) {
     let userTemplate = $('#userTemplate');
     let clone = userTemplate.contents().clone();
@@ -135,6 +151,7 @@
     $('tbody').append(clone);
   }
 
+  // first clean out table then for each user object, pass to renderUser
   function renderUsers(registeredUsers) {
     $('tbody').empty();
     for (var index in registeredUsers) {
@@ -142,6 +159,8 @@
     }
   }
 
+  // find target id of user selected by client. for this implementation tr id is user id
+  // send id to deleteUser of userService.
   function deleteUser() {
     $('.close').click(function () {
       let target = $(this).closest('tr');
