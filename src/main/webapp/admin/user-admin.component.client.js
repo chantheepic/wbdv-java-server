@@ -64,13 +64,15 @@
     })
   }
 
-  // clear all input fields. Called on add and update
+  // clear all input fields. Called on add and update. Reset any update id or update user tracking
   function ClearFormFields() {
     $('#usernameFld').val('');
     $('#passwordFld').val('');
     $('#firstNameFld').val('');
     $('#lastNameFld').val('');
     $('#roleFld').val($('#roleFld').find('option')[0].text);
+    selectedId['selected'] = false;
+    selectedId['id'] = 0;
   }
 
   // check if all fields are filled and then create new js user object
@@ -132,8 +134,6 @@
       let update = new User(selectedId['id'], usern, pswd, fname, lname, role);
 
       userService.updateUser(update, findAllUsers);
-      selectedId['selected'] = false;
-      selectedId['id'] = 0;
       ClearFormFields();
     }
   }
