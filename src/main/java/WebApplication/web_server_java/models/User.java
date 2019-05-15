@@ -1,7 +1,6 @@
 package WebApplication.web_server_java.models;
 
 public class User {
-  private static int idIndex = 0;
   private int id;
   private String username;
   private String password;
@@ -11,13 +10,19 @@ public class User {
 
   public User(){
     super();
-    this.id = idIndex;
-    idIndex++;
   }
 
-  public User(String username, String password, String firstName, String lastName, String role) {
-    this.id = idIndex;
-    idIndex++;
+  public User(int id, User other) {
+    this.id = id;
+    this.username = other.getUsername();
+    this.password = other.getPassword();
+    this.firstName = other.getFirstName();
+    this.lastName = other.getLastName();
+    this.role = other.getRole();
+  }
+
+  public User(int id, String username, String password, String firstName, String lastName, String role) {
+    this.id = id;
     this.username = username;
     this.password = password;
     this.firstName = firstName;
@@ -63,7 +68,7 @@ public class User {
   public void setRole(String role) {
     this.role = role;
   }
-  public String setRole() {
+  public String getRole() {
     return role;
   }
 }

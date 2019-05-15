@@ -1,7 +1,6 @@
 (function () {
   $('#alert').hide();
   var userService = new AdminUserServiceClient();
-  // okay for this to have additional param?
   let selectedId = { selected: false, id: 0 };
   $(main);
 
@@ -75,8 +74,8 @@
     let role = $('#roleFld').val();
 
     if (usern != '' && pswd != '' && fname != '' && role != '') {
-      let newUser = new User(usern, pswd, fname, lname, role);
-      userService.createUser(newUser);
+      let newUser = new User(-1, usern, pswd, fname, lname, role);
+      userService.createUser(newUser, findAllUsers);
       ClearFormFields();
       $('#alert').hide();
     } else {
@@ -85,23 +84,26 @@
   }
 
   function findAllUsers() {
-    let registeredUsers = userService.findAllUsers();
-    renderUsers(registeredUsers);
-    deleteUser();
-    findUserById();
+    userService.findAllUsers(function (registeredUsers) {
+      renderUsers(registeredUsers);
+      deleteUser();
+      findUserById();
+    });
   }
 
   function findUserById() {
     $('.edit').click(function () {
       let targetId = $(this).closest('tr')[0].id;
-      let target = userService.findUserById(targetId);
-      selectedId['selected'] = true;
-      selectedId['id'] = targetId;
-      $('#usernameFld').val(target.getUsername());
-      $('#passwordFld').val(target.getPassword());
-      $('#firstNameFld').val(target.getFirstName());
-      $('#lastNameFld').val(target.getLastName());
-      $('#roleFld').val(target.getRole());
+
+      userService.findUserById(targetId, function (targetUser){
+        selectedId['selected'] = true;
+        selectedId['id'] = targetId;
+        $('#usernameFld').val(targetUser.getUsername());
+        $('#passwordFld').val(targetUser.getPassword());
+        $('#firstNameFld').val(targetUser.getFirstName());
+        $('#lastNameFld').val(targetUser.getLastName());
+        $('#roleFld').val(targetUser.getRole());
+      });
     });
   }
 
@@ -112,17 +114,16 @@
       let fname = $('#firstNameFld').val();
       let lname = $('#lastNameFld').val();
       let role = $('#roleFld').val();
-      let update = new User(usern, pswd, fname, lname, role);
+      let update = new User(selectedId['id'], usern, pswd, fname, lname, role);
 
-      userService.updateUser(selectedId['id'], update);
+      userService.updateUser(update, findAllUsers);
       selectedId['selected'] = false;
       selectedId['id'] = 0;
       ClearFormFields();
     }
   }
 
-  // okay for this to have additional param?
-  function renderUser(user, id) {
+  function renderUser(user) {
     let userTemplate = $('#userTemplate');
     let clone = userTemplate.contents().clone();
     clone.find('.username').text(user.getUsername());
@@ -130,27 +131,21 @@
     clone.find('.firstName').text(user.getFirstName());
     clone.find('.lastName').text(user.getLastName());
     clone.find('.role').text(user.getRole());
-    clone.attr('id', id);
+    clone.attr('id', user.getId());
     $('tbody').append(clone);
   }
 
   function renderUsers(registeredUsers) {
     $('tbody').empty();
     for (var index in registeredUsers) {
-      renderUser(registeredUsers[index], index);
+      renderUser(registeredUsers[index]);
     }
   }
 
   function deleteUser() {
     $('.close').click(function () {
       let target = $(this).closest('tr');
-      userService.deleteUser(target[0].id);
-      target.fadeOut(function () {
-        if (target.siblings('.list-group-item').length == 0) {
-          target.siblings('h5').fadeOut();
-        }
-        target.remove();
-      });
+      userService.deleteUser(target[0].id, findAllUsers);
     });
 
   }
