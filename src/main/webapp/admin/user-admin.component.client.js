@@ -71,6 +71,8 @@
     $('#firstNameFld').val('');
     $('#lastNameFld').val('');
     $('#roleFld').val($('#roleFld').find('option')[0].text);
+    selectedId['selected'] = false;
+    selectedId['id'] = 0;
   }
 
   // check if all fields are filled and then create new js user object
@@ -133,8 +135,6 @@
 
       userService.updateUser(update, findAllUsers);
       ClearFormFields();
-      selectedId['selected'] = false;
-      selectedId['id'] = 0;
     }
   }
 
