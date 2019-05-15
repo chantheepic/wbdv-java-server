@@ -1,5 +1,6 @@
 package WebApplication.web_server_java.models;
 
+// implementation of user model
 public class User {
   private int id;
   private String username;
@@ -8,10 +9,12 @@ public class User {
   private String lastName;
   private String role;
 
+  // default constructor
   public User(){
     super();
   }
 
+  // constructor for auto incrementing function
   public User(int id, User other) {
     this.id = id;
     this.username = other.getUsername();
@@ -21,6 +24,7 @@ public class User {
     this.role = other.getRole();
   }
 
+  // large constructor
   public User(int id, String username, String password, String firstName, String lastName, String role) {
     this.id = id;
     this.username = username;
@@ -30,6 +34,7 @@ public class User {
     this.role = role;
   }
 
+  // setters and getters
   public void setId(int id) {
     this.id = id;
   }

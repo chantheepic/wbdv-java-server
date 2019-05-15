@@ -17,8 +17,10 @@ import WebApplication.web_server_java.models.User;
 @RestController
 public class UserController implements ApplicationListener<ApplicationReadyEvent> {
   private ArrayList<User> registeredUsers = new ArrayList<User>();
+  // auto incrementing id
   private static int idIndex = 0;
 
+  // auto initialization adds two users when service starts. can be called manually to add two more default users
   @GetMapping("/api/initialize")
   public String initialize() {
     User a = new User(idIndex, "alice", "alice", "Alice", "Wonderland", "Student");
@@ -39,11 +41,13 @@ public class UserController implements ApplicationListener<ApplicationReadyEvent
     return;
   }
 
+  // return all users
   @GetMapping("/api/users")
   public ArrayList<User> findAllUsers() {
     return registeredUsers;
   }
 
+  // find user with given id. return user
   @GetMapping("/api/users/{userid}")
   public User findUserById(@PathVariable("userid") int userid) {
 
@@ -55,6 +59,7 @@ public class UserController implements ApplicationListener<ApplicationReadyEvent
     return null;
   }
 
+  // add given user. use constructor that takes in id
   @PostMapping("/api/users")
   public User addUser(@RequestBody User user) {
     User newUser = new User(idIndex, user);
@@ -63,6 +68,7 @@ public class UserController implements ApplicationListener<ApplicationReadyEvent
     return newUser;
   }
 
+  // delete user with given id
   @DeleteMapping("/api/users/{userid}")
   public String deleteUser(@PathVariable("userid") int userid) {
 
@@ -75,6 +81,7 @@ public class UserController implements ApplicationListener<ApplicationReadyEvent
     return "User not found";
   }
 
+  // overwrite parameters of user with given id with those of given user
   @PutMapping("/api/users")
   public String updateUser(@RequestBody User user) {
 
