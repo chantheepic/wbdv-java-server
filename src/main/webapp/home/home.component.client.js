@@ -1,21 +1,24 @@
 (function () {
+  // initialize page, set initial event handlers
   RegisterCloseEvents();
 
   $('#addcourseBtn').click(function () {
+    // course title is taken from input field
     let courseTitle = ($('#addcourseTitle').val() == '' ? "Untitled Course" : $('#addcourseTitle').val());
     console.log(courseTitle);
-    let spacelessCourseTitle = courseTitle.replace(/\s/g, '_');
-
     let courseTemplate = $('#courseTemplate');
+
+    // clone course row template and populate field with course title
     let clone = courseTemplate.contents().clone();
     clone.find('.courseTitle').text(courseTitle);
-    clone.attr('id', spacelessCourseTitle);
 
+    // add new row to list and register close event handler
     $('#courselist').append(clone).children(':last').hide().fadeIn();
     $('#courselist').children('h5').fadeIn();
     RegisterCloseEvents();
   });
 
+  // adds course row removal event handlers
   function RegisterCloseEvents() {
     $('.close').click(function () {
       let target = $(this).closest('.list-group-item');
