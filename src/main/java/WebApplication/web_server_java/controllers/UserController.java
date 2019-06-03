@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import WebApplication.web_server_java.models.User;
 
@@ -21,7 +22,7 @@ public class UserController implements ApplicationListener<ApplicationReadyEvent
   private static int idIndex = 0;
 
   // auto initialization adds two users when service starts. can be called manually to add two more default users
-  @GetMapping("/api/initialize")
+  @GetMapping("/api/users/initialize")
   public String initialize() {
     User a = new User(idIndex, "alice", "alice", "Alice", "Wonderland", "Student");
     idIndex++;
@@ -59,8 +60,7 @@ public class UserController implements ApplicationListener<ApplicationReadyEvent
     return null;
   }
 
-  // add given user. use constructor that takes in id
-  // return all users
+  // add given user. use constructor that takes in id. return all users
   @PostMapping("/api/users")
   public ArrayList<User> addUser(@RequestBody User user) {
     User newUser = new User(idIndex, user);
